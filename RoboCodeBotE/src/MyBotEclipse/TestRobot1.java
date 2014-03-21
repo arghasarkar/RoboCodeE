@@ -8,8 +8,8 @@ import robocode.*;
  * Module: CS255
  */
 public class TestRobot1 extends Robot{
+
 	final int move_distance = 100;
-	boolean moved_ahead = false;
 	
 	public void run() {
 		/*
@@ -55,11 +55,7 @@ public class TestRobot1 extends Robot{
 		/*
 		 * A HitByBulletEvent is sent to onHitByBullet() when your robot has been hit by a bullet.
 		 */
-		if (moved_ahead == false) {
-			ahead(move_distance);
-		} else {
-			back(move_distance);
-		}
+		ahead(move_distance);
 	}
 	
 	public void onHitRobot(HitRobotEvent e) {
