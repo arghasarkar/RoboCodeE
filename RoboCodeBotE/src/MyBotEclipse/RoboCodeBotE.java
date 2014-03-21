@@ -14,7 +14,9 @@ public class RoboCodeBotE extends Robot{
     }
     
     public void onScannedRobot(ScannedRobotEvent e) {
-        fire(1);
+    	double enemy_bearing = e.getBearing();
+        turnGunRight(enemy_bearing);
+        fire(2);
     }
 
 }
