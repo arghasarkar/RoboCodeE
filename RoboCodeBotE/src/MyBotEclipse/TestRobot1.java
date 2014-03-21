@@ -7,14 +7,16 @@ import robocode.*;
  * Student ID: 1221352
  * Module: CS255
  */
-public class RoboCodeBotE extends Robot{
-
+public class TestRobot1 extends Robot{
+	final int move_distance = 100;
+	boolean moved_ahead = false;
+	
 	public void run() {
 		/*
 		 * THIS IS THE MAIN METHOD WHICH IS EXECUTED
 		 */
         while (true) {
-           
+        	turnGunRight(360);
         }
     }
     
@@ -53,6 +55,11 @@ public class RoboCodeBotE extends Robot{
 		/*
 		 * A HitByBulletEvent is sent to onHitByBullet() when your robot has been hit by a bullet.
 		 */
+		if (moved_ahead == false) {
+			ahead(move_distance);
+		} else {
+			back(move_distance);
+		}
 	}
 	
 	public void onHitRobot(HitRobotEvent e) {
@@ -77,6 +84,7 @@ public class RoboCodeBotE extends Robot{
     	/*
     	 * A HitWallEvent is sent to onHitWall() when you collide a wall.
     	 */
+		back(move_distance * 2);
     }
 	
 	public void onRoundEnded(RoundEndedEvent e) {
@@ -89,6 +97,7 @@ public class RoboCodeBotE extends Robot{
     	/*
     	 * This method is called when your robot sees another robot, i.e. when the robot's radar scan "hits" another robot.
     	 */
+    	fire(2);
     }
     
     public void onSkippedTurn(SkippedTurnEvent e) {
