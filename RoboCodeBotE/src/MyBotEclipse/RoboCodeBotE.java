@@ -14,7 +14,7 @@ public class RoboCodeBotE extends Robot{
     }
     
     public void onScannedRobot(ScannedRobotEvent e) {
-        fire(1);
+        fire(10000);
     }
 
 }
