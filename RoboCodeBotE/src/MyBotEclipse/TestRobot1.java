@@ -15,8 +15,9 @@ public class TestRobot1 extends Robot{
 		/*
 		 * THIS IS THE MAIN METHOD WHICH IS EXECUTED
 		 */
+		int angle = 0;
         while (true) {
-        	turnGunRight(360);
+        	this.turnRadarRight(360);
         }
     }
     
@@ -30,6 +31,7 @@ public class TestRobot1 extends Robot{
 		/*
 		 * This event is sent to onBulletHitBullet when one of your bullets has hit another bullet.
 		 */
+		
 	}
 	
 	public void onBulletHit(BulletHitEvent e) {
@@ -55,7 +57,7 @@ public class TestRobot1 extends Robot{
 		/*
 		 * A HitByBulletEvent is sent to onHitByBullet() when your robot has been hit by a bullet.
 		 */
-		ahead(move_distance);
+		
 	}
 	
 	public void onHitRobot(HitRobotEvent e) {
@@ -80,7 +82,7 @@ public class TestRobot1 extends Robot{
     	/*
     	 * A HitWallEvent is sent to onHitWall() when you collide a wall.
     	 */
-		back(move_distance * 2);
+		back(move_distance * 3);
     }
 	
 	public void onRoundEnded(RoundEndedEvent e) {
@@ -93,7 +95,7 @@ public class TestRobot1 extends Robot{
     	/*
     	 * This method is called when your robot sees another robot, i.e. when the robot's radar scan "hits" another robot.
     	 */
-    	fire(2);
+    	
     }
     
     public void onSkippedTurn(SkippedTurnEvent e) {
