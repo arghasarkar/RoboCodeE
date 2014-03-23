@@ -31,13 +31,14 @@ public class TestRobot1 extends Robot{
 		/*
 		 * This event is sent to onBulletHitBullet when one of your bullets has hit another bullet.
 		 */
-		
+		ahead(move_distance);
 	}
 	
 	public void onBulletHit(BulletHitEvent e) {
 		/*
 		 * This event is sent to onBulletHit when one of your bullets has hit another robot.
 		 */
+		fire(2);
 	}
 	
 	public void onBulletMissed(BulletMissedEvent e) {
@@ -57,13 +58,16 @@ public class TestRobot1 extends Robot{
 		/*
 		 * A HitByBulletEvent is sent to onHitByBullet() when your robot has been hit by a bullet.
 		 */
-		
+		ahead(move_distance);
 	}
 	
 	public void onHitRobot(HitRobotEvent e) {
 		/*
 		 * A HitRobotEvent is sent to onHitRobot() when your robot collides with another robot.
 		 */
+		back(move_distance / 2);
+		ahead(move_distance);
+
 	}
 	
 	public void onPaint(PaintEvent e) {
@@ -82,6 +86,7 @@ public class TestRobot1 extends Robot{
     	/*
     	 * A HitWallEvent is sent to onHitWall() when you collide a wall.
     	 */
+		turnRight(90);
 		back(move_distance * 3);
     }
 	
@@ -95,7 +100,12 @@ public class TestRobot1 extends Robot{
     	/*
     	 * This method is called when your robot sees another robot, i.e. when the robot's radar scan "hits" another robot.
     	 */
-    	
+    	turnGunRight(getHeading() - getGunHeading());
+    	turnGunRight(e.getBearing());
+    	fire(2);
+    	turnRight(e.getBearing());
+    	ahead(e.getDistance());
+    	turnRight(90);
     }
     
     public void onSkippedTurn(SkippedTurnEvent e) {
@@ -114,6 +124,16 @@ public class TestRobot1 extends Robot{
     	/*
     	 * This event is sent to onWin() when your robot wins the round in a battle
     	 */
+    	int angle = 0;
+    	while (angle <= 360) {
+    		turnGunRight(90);
+    		fire(5);
+        	turnLeft(90);
+        	fire(5);
+        	angle += 90;
+    	}
+    	
+    	
     }
     
 }
