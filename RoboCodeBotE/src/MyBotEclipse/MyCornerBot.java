@@ -11,6 +11,47 @@ public class MyCornerBot extends Robot{
 	
 	//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------
 	
+	private double getNegativeHeight() {
+		//GETS THE DISTANCE TO THE TOP WALL
+		double negHeight = this.getBattleFieldHeight() - this.getHeight();
+		return negHeight;
+	}
+	
+	private double getNegativeWidth() {
+		//GETS THE DISTANCE TO THE RIGHT WALL
+		double negWidth = this.getBattleFieldWidth() - this.getWidth();
+		return negWidth;
+	}
+	
+	private void pointToNorth() {
+		//POINTS THE FRONT OF THE ROBOT TOWARDS NORTH
+		double bearing = this.getHeading();
+		turnLeft(bearing);
+	}
+	
+	private void pointToEast() {
+		//POINTS THE FRONT OF THE ROBOT TOWARDS EAST
+		double bearing = this.getHeading();
+		turnLeft(bearing - 90);
+	}
+	
+	private void pointToSouth() {
+		//POINTS THE FRONT OF THE ROBOT TOWARDS SOUTH
+		double bearing = this.getHeading();
+		turnLeft(bearing - 180);
+	}
+	
+	private void pointToWest() {
+		//POINTS THE FRONT OF THE ROBOT TOWARDS WEST
+		double bearing = this.getHeading();
+		turnLeft(bearing - 270);
+	}
+	
+	private void moveToNearestCorner() {
+		if ( 1 > 1) {
+			
+		}
+	}
 	
 
 	//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------
