@@ -48,9 +48,11 @@ public class MyCornerBot extends Robot{
 	}
 	
 	private void moveToNearestCorner() {
-		if ( 1 > 1) {
-			
-		}
+		//MOVES THE ROBOT TO THE NEAREST CORNER
+		pointToNorth();
+		ahead(0);
+		pointToEast();
+		ahead(0);
 	}
 	
 
@@ -60,6 +62,9 @@ public class MyCornerBot extends Robot{
 		/*
 		 * THIS IS THE MAIN METHOD WHICH IS EXECUTED
 		 */
+		
+		moveToNearestCorner();
+		
         while (true) {
         	
         }
