@@ -8,9 +8,10 @@ import robocode.*;
  * Module: CS255
  */
 
-public class TestRobot1 extends Robot{
+public class TestRobot2 extends Robot{
 
-	final int move_distance = 100;
+	final int move_distance = 50;
+	int move_direction = 1;
 	
 	public void run() {
 		/*
@@ -32,14 +33,14 @@ public class TestRobot1 extends Robot{
 		/*
 		 * This event is sent to onBulletHitBullet when one of your bullets has hit another bullet.
 		 */
-		ahead(move_distance);
+		ahead(move_distance * move_direction);
 	}
 	
 	public void onBulletHit(BulletHitEvent e) {
 		/*
 		 * This event is sent to onBulletHit when one of your bullets has hit another robot.
 		 */
-		fire(2);
+		//fire(2);
 	}
 	
 	public void onBulletMissed(BulletMissedEvent e) {
@@ -60,8 +61,10 @@ public class TestRobot1 extends Robot{
 		 * A HitByBulletEvent is sent to onHitByBullet() when your robot has been hit by a bullet.
 		 */
 		
-		//turnRight(e.getBearing() + 90);
-		ahead(move_distance);
+		/*turnRight(e.getBearing() + 90);
+		 * 
+		 */
+		//ahead(move_distance * move_direction);
 		
 	}
 	
@@ -69,8 +72,8 @@ public class TestRobot1 extends Robot{
 		/*
 		 * A HitRobotEvent is sent to onHitRobot() when your robot collides with another robot.
 		 */
-		back(move_distance / 2);
-		ahead(move_distance);
+		turnRight(e.getBearing() + 90);
+		ahead(move_distance * move_direction);
 
 	}
 	
@@ -91,7 +94,9 @@ public class TestRobot1 extends Robot{
     	 * A HitWallEvent is sent to onHitWall() when you collide a wall.
     	 */
 		turnRight(90);
-		back(move_distance * 3);
+		move_direction *= -1;
+		ahead(move_distance * 3 * move_direction);
+		
     }
 	
 	public void onRoundEnded(RoundEndedEvent e) {
@@ -107,10 +112,9 @@ public class TestRobot1 extends Robot{
     	
     	turnGunRight(getHeading() - getGunHeading());
     	turnGunRight(e.getBearing());
-    	fire(2);
-    	turnRight(e.getBearing());
-    	ahead(e.getDistance());
-    	turnRight(90);
+    	fire(15);
+    
+    	//turnRight(90);
     }
     
     public void onSkippedTurn(SkippedTurnEvent e) {

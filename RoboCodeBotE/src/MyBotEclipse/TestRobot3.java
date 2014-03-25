@@ -8,9 +8,11 @@ import robocode.*;
  * Module: CS255
  */
 
-public class TestRobot1 extends Robot{
+public class TestRobot3 extends Robot{
 
-	final int move_distance = 100;
+	final int move_distance = 50;												//HOW MUCH TO MOVE
+	int move_direction = 1;														//USED TO CALCULATE IF THE ROBOT WILL MOVE FORWARD OR BACKWARDS
+	int firepower = 15;															//THE FIREPOWER. GOES UP IF ROBOT IS HIT. GOES DOWN OTHERWISE
 	
 	public void run() {
 		/*
@@ -32,14 +34,16 @@ public class TestRobot1 extends Robot{
 		/*
 		 * This event is sent to onBulletHitBullet when one of your bullets has hit another bullet.
 		 */
-		ahead(move_distance);
+		ahead(move_distance * move_direction);
 	}
 	
 	public void onBulletHit(BulletHitEvent e) {
 		/*
 		 * This event is sent to onBulletHit when one of your bullets has hit another robot.
 		 */
-		fire(2);
+		firepower += 5;
+		System.out.println(firepower);
+		//fire(2);
 	}
 	
 	public void onBulletMissed(BulletMissedEvent e) {
@@ -47,6 +51,14 @@ public class TestRobot1 extends Robot{
 		 * This event is sent to onBulletMissed when one of your bullets has missed.
 		 *  i.e. when the bullet has reached the border of the battlefield.
 		 */
+		firepower += 5;
+		System.out.println(firepower);
+		try {
+			Thread.sleep(250);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	public void onDeath(DeathEvent e) {
@@ -60,8 +72,10 @@ public class TestRobot1 extends Robot{
 		 * A HitByBulletEvent is sent to onHitByBullet() when your robot has been hit by a bullet.
 		 */
 		
-		//turnRight(e.getBearing() + 90);
-		ahead(move_distance);
+		/*turnRight(e.getBearing() + 90);
+		 * 
+		 */
+		//ahead(move_distance * move_direction);
 		
 	}
 	
@@ -69,8 +83,8 @@ public class TestRobot1 extends Robot{
 		/*
 		 * A HitRobotEvent is sent to onHitRobot() when your robot collides with another robot.
 		 */
-		back(move_distance / 2);
-		ahead(move_distance);
+		turnRight(e.getBearing() + 90);
+		ahead(move_distance * move_direction);
 
 	}
 	
@@ -91,7 +105,9 @@ public class TestRobot1 extends Robot{
     	 * A HitWallEvent is sent to onHitWall() when you collide a wall.
     	 */
 		turnRight(90);
-		back(move_distance * 3);
+		move_direction *= -1;
+		ahead(move_distance * 3 * move_direction);
+		
     }
 	
 	public void onRoundEnded(RoundEndedEvent e) {
@@ -107,10 +123,9 @@ public class TestRobot1 extends Robot{
     	
     	turnGunRight(getHeading() - getGunHeading());
     	turnGunRight(e.getBearing());
-    	fire(2);
-    	turnRight(e.getBearing());
-    	ahead(e.getDistance());
-    	turnRight(90);
+    	fire(firepower);
+    
+    	//turnRight(90);
     }
     
     public void onSkippedTurn(SkippedTurnEvent e) {
