@@ -149,13 +149,15 @@ public class MyWallBot extends Robot{
 		 * THIS IS THE MAIN METHOD WHICH IS EXECUTED
 		 */
 		
-		
-		
+		int corner = (int) (System.currentTimeMillis() % 4);
+    	moveToCorner(corner);
 		
         while (true) {
-        	//turnRadarRight(360);
+        	turnRadarRight(360);
         	
-           
+        	corner = (int) (System.currentTimeMillis() % 4);
+        	moveToCorner(corner);
+
         }
     }
     
@@ -194,7 +196,11 @@ public class MyWallBot extends Robot{
 		/*
 		 * A HitByBulletEvent is sent to onHitByBullet() when your robot has been hit by a bullet.
 		 */
+		int corner = 0;
+		corner = (int) (System.currentTimeMillis() % 4);
 		
+    	moveToCorner(corner); 	
+    	
 	}
 	
 	public void onHitRobot(HitRobotEvent e) {
@@ -233,6 +239,7 @@ public class MyWallBot extends Robot{
     	 */
     	findTargetStationary(e.getBearing());
     	fire(firepower);
+    	//run();
     }
     
     public void onSkippedTurn(SkippedTurnEvent e) {
