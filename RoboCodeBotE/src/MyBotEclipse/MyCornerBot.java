@@ -114,6 +114,7 @@ public class MyCornerBot extends Robot{
 		
         while (true) {
         	turnRadarRight(360);
+        	double corner = checkCorner(getX(), getY());
         }
     }
     
