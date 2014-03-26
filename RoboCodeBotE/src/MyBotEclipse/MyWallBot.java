@@ -79,7 +79,7 @@ public class MyWallBot extends Robot{
 			turnGunRight(enemy_bearing);
 		}
 		
-		private int checkCorner(double x, double y) {
+		private int getCorner(double x, double y) {
 			/*
 			 * RETURNS THE CORNER NUMBER. STARTING AT 0 AND GOING ANTI-CLOCKWISE FROM BOTTOM RIGHT
 			 * 			    1 --------- 2
@@ -102,24 +102,59 @@ public class MyWallBot extends Robot{
 			}
 		}
 		
-		//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------
-
-	
+		private void moveToCorner(int corner) {
+			/*
+			 *  MOVES THE ROBOT TO A CORNER DEFINED BY THE INPUT. STARTING AT 0 AND GOING ANTI-CLOCKWISE FROM BOTTOM RIGHT
+			 * 			    1 --------- 2
+			 *              |           |
+			 * 				0 --------- 3
+			 */
+			
+			int cur_corner = getCorner(this.getX(), this.getY());
+			//THE X AND THE Y CO-ORDINATE OF THE REQUIRED CORNER
+			double required_x = 0;
+			double required_y = 0;
+			
+			switch (corner) {
+				case 0: {
+					required_x = 0;
+					required_y = 0;
+				} break;
+				case 1: {
+					required_x = 0;
+					required_y = this.getBattleFieldHeight();					
+				} break;
+				case 2: {
+					required_x = this.getBattleFieldWidth();
+					required_y = this.getBattleFieldWidth();
+				} break;
+				case 3: {
+					required_x = this.getBattleFieldWidth();
+					required_y = 0;
+				} break;
+			}
+			
+			pointToNorth();
+			ahead(required_y - this.getY());
+			pointToEast();
+			ahead(required_x - this.getX());
+			
+			
+		}
+		
+		//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------	
 	
 	public void run() {
 		/*
 		 * THIS IS THE MAIN METHOD WHICH IS EXECUTED
 		 */
 		
-		pointToSouth();
-		ahead(getY());
-		pointToWest();
-		ahead(getX());
-		pointToEast();
+		
+		
 		
         while (true) {
-        	System.out.println("X: " + getX() + "     Y: " + getY());
-        	turnRadarRight(360);
+        	//turnRadarRight(360);
+        	
            
         }
     }
@@ -159,6 +194,7 @@ public class MyWallBot extends Robot{
 		/*
 		 * A HitByBulletEvent is sent to onHitByBullet() when your robot has been hit by a bullet.
 		 */
+		
 	}
 	
 	public void onHitRobot(HitRobotEvent e) {

@@ -9,7 +9,6 @@ import robocode.*;
  */
 public class RoboCodeBotE extends Robot{
 
-
 	//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------
 	
 		//HOW MUCH DAMAGE THE BULLET CAN DO
@@ -80,7 +79,7 @@ public class RoboCodeBotE extends Robot{
 			turnGunRight(enemy_bearing);
 		}
 		
-		private int checkCorner(double x, double y) {
+		private int getCorner(double x, double y) {
 			/*
 			 * RETURNS THE CORNER NUMBER. STARTING AT 0 AND GOING ANTI-CLOCKWISE FROM BOTTOM RIGHT
 			 * 			    1 --------- 2
@@ -101,6 +100,46 @@ public class RoboCodeBotE extends Robot{
 					return 2;
 				}
 			}
+		}
+		
+		private void moveToCorner(int corner) {
+			/*
+			 *  MOVES THE ROBOT TO A CORNER DEFINED BY THE INPUT. STARTING AT 0 AND GOING ANTI-CLOCKWISE FROM BOTTOM RIGHT
+			 * 			    1 --------- 2
+			 *              |           |
+			 * 				0 --------- 3
+			 */
+			
+			int cur_corner = getCorner(this.getX(), this.getY());
+			//THE X AND THE Y CO-ORDINATE OF THE REQUIRED CORNER
+			double required_x = 0;
+			double required_y = 0;
+			
+			switch (corner) {
+				case 0: {
+					required_x = 0;
+					required_y = 0;
+				} break;
+				case 1: {
+					required_x = 0;
+					required_y = this.getBattleFieldHeight();					
+				} break;
+				case 2: {
+					required_x = this.getBattleFieldWidth();
+					required_y = this.getBattleFieldWidth();
+				} break;
+				case 3: {
+					required_x = this.getBattleFieldWidth();
+					required_y = 0;
+				} break;
+			}
+			
+			pointToNorth();
+			ahead(required_y - this.getY());
+			pointToEast();
+			ahead(required_x - this.getX());
+			
+			
 		}
 		
 		//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------
