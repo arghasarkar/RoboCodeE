@@ -9,6 +9,103 @@ import robocode.*;
  */
 public class RoboCodeBotE extends Robot{
 
+
+	//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------
+	
+		//HOW MUCH DAMAGE THE BULLET CAN DO
+		int firepower = 15;				
+		
+		//DIRECTIONS
+		final int NORTH = 0;
+		final int EAST = 90;
+		final int SOUTH = 180;
+		final int WEST = 270;
+		
+		private double getNegativeHeight() {
+			//GETS THE DISTANCE TO THE TOP WALL
+			double negHeight = this.getBattleFieldHeight() - this.getY();
+			return negHeight;
+		}
+		
+		private double getNegativeWidth() {
+			//GETS THE DISTANCE TO THE RIGHT WALL
+			double negWidth = this.getBattleFieldWidth() - this.getX();
+			return negWidth;
+		}
+		
+		private void pointToNorth() {
+			//POINTS THE FRONT OF THE ROBOT TOWARDS NORTH
+			double bearing = this.getHeading();
+			turnLeft(bearing);
+		}
+		
+		private void pointToEast() {
+			//POINTS THE FRONT OF THE ROBOT TOWARDS EAST
+			double bearing = this.getHeading();
+			turnLeft(bearing - EAST);
+		}
+		
+		private void pointToSouth() {
+			//POINTS THE FRONT OF THE ROBOT TOWARDS SOUTH
+			double bearing = this.getHeading();
+			turnLeft(bearing - SOUTH);
+		}
+		
+		private void pointToWest() {
+			//POINTS THE FRONT OF THE ROBOT TOWARDS WEST
+			double bearing = this.getHeading();
+			turnLeft(bearing - WEST);
+		}
+		
+		private void moveToNearestCorner() {
+			//MOVES THE ROBOT TO THE NEAREST CORNER
+			pointToNorth();
+			//ahead(this.getBattleFieldHeight());
+			if (getNegativeHeight() >= this.getY()) {
+				ahead(-1 * this.getY());
+			} else {
+				ahead(this.getY());
+			}
+			pointToEast();
+			if (getNegativeWidth() >= this.getX()) {
+				ahead(-1 * this.getX());
+			} else {
+				ahead(this.getX());
+			}
+		}
+		
+		private void findTargetStationary(double enemy_bearing) {
+			//POINTS THE GUN AT THE ENEMY
+			turnGunRight(this.getHeading() - this.getGunHeading());
+			turnGunRight(enemy_bearing);
+		}
+		
+		private int checkCorner(double x, double y) {
+			/*
+			 * RETURNS THE CORNER NUMBER. STARTING AT 0 AND GOING ANTI-CLOCKWISE FROM BOTTOM RIGHT
+			 * 			    1 --------- 2
+			 *              |           |
+			 * 				0 --------- 3
+			 */
+			
+			if (x <= (double) (this.getBattleFieldWidth() / 2)) {
+				if (y <= (double) (this.getBattleFieldHeight() / 2)) {
+					return 0;
+				} else {
+					return 1;
+				}
+			} else {
+				if (y <= (double) (this.getBattleFieldHeight() / 2)) {
+					return 3;
+				} else {
+					return 2;
+				}
+			}
+		}
+		
+		//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------
+
+	
 	public void run() {
 		/*
 		 * THIS IS THE MAIN METHOD WHICH IS EXECUTED

@@ -7,8 +7,7 @@ import robocode.*;
  * Student ID: 1221352
  * Module: CS255
  */
-public class MyCornerBot extends Robot{
-	
+public class MyWallBot extends Robot{
 
 	//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------
 	
@@ -105,15 +104,23 @@ public class MyCornerBot extends Robot{
 		
 		//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------
 
+	
+	
 	public void run() {
 		/*
 		 * THIS IS THE MAIN METHOD WHICH IS EXECUTED
 		 */
 		
-		moveToNearestCorner();
+		pointToSouth();
+		ahead(getY());
+		pointToWest();
+		ahead(getX());
+		pointToEast();
 		
         while (true) {
+        	System.out.println("X: " + getX() + "     Y: " + getY());
         	turnRadarRight(360);
+           
         }
     }
     
