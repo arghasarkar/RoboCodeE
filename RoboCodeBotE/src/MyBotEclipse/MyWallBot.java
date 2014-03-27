@@ -26,6 +26,11 @@ public class MyWallBot extends Robot{
 			return negHeight;
 		}
 		
+		private double getNegativeHeight(double battleFieldHeight, double y) {
+			double negHeight = battleFieldHeight - y;
+			return negHeight;
+		}
+		
 		private double getNegativeWidth() {
 			//GETS THE DISTANCE TO THE RIGHT WALL
 			double negWidth = this.getBattleFieldWidth() - this.getX();
@@ -238,6 +243,7 @@ public class MyWallBot extends Robot{
     	 * This method is called when your robot sees another robot, i.e. when the robot's radar scan "hits" another robot.
     	 */
     	findTargetStationary(e.getBearing());
+    	
     	fire(firepower);
     	//run();
     }
