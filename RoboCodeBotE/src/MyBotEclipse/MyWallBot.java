@@ -26,17 +26,12 @@ public class MyWallBot extends Robot{
 			return negHeight;
 		}
 		
-		private double getNegativeHeight(double battleFieldHeight, double y) {
-			double negHeight = battleFieldHeight - y;
-			return negHeight;
-		}
-		
 		private double getNegativeWidth() {
 			//GETS THE DISTANCE TO THE RIGHT WALL
 			double negWidth = this.getBattleFieldWidth() - this.getX();
 			return negWidth;
 		}
-		
+				
 		private void pointToNorth() {
 			//POINTS THE FRONT OF THE ROBOT TOWARDS NORTH
 			double bearing = this.getHeading();
@@ -106,7 +101,7 @@ public class MyWallBot extends Robot{
 				}
 			}
 		}
-		
+				
 		private void moveToCorner(int corner) {
 			/*
 			 *  MOVES THE ROBOT TO A CORNER DEFINED BY THE INPUT. STARTING AT 0 AND GOING ANTI-CLOCKWISE FROM BOTTOM RIGHT
@@ -115,7 +110,6 @@ public class MyWallBot extends Robot{
 			 * 				0 --------- 3
 			 */
 			
-			int cur_corner = getCorner(this.getX(), this.getY());
 			//THE X AND THE Y CO-ORDINATE OF THE REQUIRED CORNER
 			double required_x = 0;
 			double required_y = 0;
