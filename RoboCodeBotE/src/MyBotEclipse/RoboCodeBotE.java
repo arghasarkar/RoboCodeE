@@ -89,14 +89,17 @@ private double findLinearTarget3(double bearing_rads, double distance, double en
 		 * SO THAT THE BULLET HITS THE ROBOT EVEN WHEN IT IS FAR AWAY
 		 */
 	
-		double my_X = this.getX();
-		double my_Y = this.getY();
+		double my_X = this.getX();										//MY X COORDINATE
+		double my_Y = this.getY();										//MY Y COORDINATE
 		
-		double absolute_bearing =  Math.toRadians(this.getHeading()) + bearing_rads;
+		//GETS THE ABSOLUTE BEARING BY ADDING MY HEADING (ABSOLUTE) TO THE ENEMY BEARING (RELATIVE TO MY HEADING)
+		double absolute_bearing =  Math.toRadians(this.getHeading()) + bearing_rads;		
 		
+		//WORKS OUT THE ENEMY'S POSITION BY USING SOME TRIG AND MY POSITION
 		double enemy_X = my_X + distance * Math.sin(absolute_bearing);
 		double enemy_Y = my_Y + distance * Math.cos(absolute_bearing);
 		
+		//THIS WILL BE USED LATER TO WORK OUT THE PREDICTED POSITION OF THE ENEMY LATER
 		double delta_time = 0;
 		double predicted_X = enemy_X;
 		double predicted_Y = enemy_Y;
@@ -108,10 +111,12 @@ private double findLinearTarget3(double bearing_rads, double distance, double en
 			
 		}
 		
+		//WORKS OUT THE ANGLE
 		double angle = Utils.normalAbsoluteAngle(Math.atan2(predicted_X - my_X, predicted_Y - my_Y));
 		angle = Utils.normalRelativeAngle(angle - Math.toRadians(this.getGunHeading()));
 		angle = Math.toDegrees(angle);
 		
+		//RETURNS THE ANGLE WHICH HAS BEEN WORKED OUT
 		return angle;
 	}
 
