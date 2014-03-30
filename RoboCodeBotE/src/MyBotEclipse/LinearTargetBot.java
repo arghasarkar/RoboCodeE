@@ -10,8 +10,9 @@ import robocode.util.Utils;
  * Student ID: 1221352
  * Module: CS255
  */
-public class MyWallBot extends Robot{
-
+public class LinearTargetBot extends Robot{
+	
+	int scannedCalled = 0;
 	//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------
 	
 	//HOW MUCH DAMAGE THE BULLET CAN DO
@@ -187,17 +188,10 @@ private double findLinearTarget3(double bearing_rads, double distance, double en
 		/*
 		 * THIS IS THE MAIN METHOD WHICH IS EXECUTED
 		 */
-		
-		int corner = (int) (System.currentTimeMillis() % 4);
-    	moveToCorner(corner);
-		
+		//pointToNorth();
+		this.setAdjustRadarForGunTurn(true);
         while (true) {
-        	
         	turnRadarRight(360);
-        	
-        	corner = (int) (System.currentTimeMillis() % 4);
-        	moveToCorner(corner);
-
         }
     }
     
@@ -236,11 +230,6 @@ private double findLinearTarget3(double bearing_rads, double distance, double en
 		/*
 		 * A HitByBulletEvent is sent to onHitByBullet() when your robot has been hit by a bullet.
 		 */
-		int corner = 0;
-		corner = (int) (System.currentTimeMillis() % 4);
-		
-    	moveToCorner(corner); 	
-    	
 	}
 	
 	public void onHitRobot(HitRobotEvent e) {
@@ -277,10 +266,14 @@ private double findLinearTarget3(double bearing_rads, double distance, double en
     	/*
     	 * This method is called when your robot sees another robot, i.e. when the robot's radar scan "hits" another robot.
     	 */
-    	findTargetStationary(e.getBearing());
-    	//findLinearTarget(this.getHeading(), e.getBearing(), e.getHeadingRadians(), e.getVelocity(), (20 - 3 * firepower));
-    	//fire(firepower);
-    	//run();
+    	/*double angle = findLinearTarget2(e.getDistance(), e.getBearing(), e.getVelocity(), e.getHeading());
+    	turnGunRight(angle);
+    	fire(firepower);
+    	System.out.println("HIyaarr");*/
+    	double angle = findLinearTarget3(e.getBearingRadians(), e.getDistance(), e.getHeadingRadians(), e.getVelocity());
+    	turnGunRight(angle);
+    	fire(firepower);
+    	System.out.println("Scan called:" + scannedCalled++);
     }
     
     public void onSkippedTurn(SkippedTurnEvent e) {

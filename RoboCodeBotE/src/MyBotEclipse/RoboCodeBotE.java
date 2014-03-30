@@ -1,6 +1,9 @@
 package MyBotEclipse;
 
+import java.awt.geom.Point2D;
+
 import robocode.*;
+import robocode.util.Utils;
 
 /*
  * @author: Argha Sarkar
@@ -8,143 +11,178 @@ import robocode.*;
  * Module: CS255
  */
 public class RoboCodeBotE extends Robot{
-
+	
 	//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------
 	
-		//HOW MUCH DAMAGE THE BULLET CAN DO
-		int firepower = 15;				
-		
-		//DIRECTIONS
-		final int NORTH = 0;
-		final int EAST = 90;
-		final int SOUTH = 180;
-		final int WEST = 270;
-		
-		private double getNegativeHeight() {
-			//GETS THE DISTANCE TO THE TOP WALL
-			double negHeight = this.getBattleFieldHeight() - this.getY();
-			return negHeight;
-		}
-		
-		private double getNegativeWidth() {
-			//GETS THE DISTANCE TO THE RIGHT WALL
-			double negWidth = this.getBattleFieldWidth() - this.getX();
-			return negWidth;
-		}
-		
-		private void pointToNorth() {
-			//POINTS THE FRONT OF THE ROBOT TOWARDS NORTH
-			double bearing = this.getHeading();
-			turnLeft(bearing);
-		}
-		
-		private void pointToEast() {
-			//POINTS THE FRONT OF THE ROBOT TOWARDS EAST
-			double bearing = this.getHeading();
-			turnLeft(bearing - EAST);
-		}
-		
-		private void pointToSouth() {
-			//POINTS THE FRONT OF THE ROBOT TOWARDS SOUTH
-			double bearing = this.getHeading();
-			turnLeft(bearing - SOUTH);
-		}
-		
-		private void pointToWest() {
-			//POINTS THE FRONT OF THE ROBOT TOWARDS WEST
-			double bearing = this.getHeading();
-			turnLeft(bearing - WEST);
-		}
-		
-		private void moveToNearestCorner() {
-			//MOVES THE ROBOT TO THE NEAREST CORNER
-			pointToNorth();
-			//ahead(this.getBattleFieldHeight());
-			if (getNegativeHeight() >= this.getY()) {
-				ahead(-1 * this.getY());
-			} else {
-				ahead(this.getY());
-			}
-			pointToEast();
-			if (getNegativeWidth() >= this.getX()) {
-				ahead(-1 * this.getX());
-			} else {
-				ahead(this.getX());
-			}
-		}
-		
-		private void findTargetStationary(double enemy_bearing) {
-			//POINTS THE GUN AT THE ENEMY
-			turnGunRight(this.getHeading() - this.getGunHeading());
-			turnGunRight(enemy_bearing);
-		}
-		
-		private int getCorner(double x, double y) {
-			/*
-			 * RETURNS THE CORNER NUMBER. STARTING AT 0 AND GOING ANTI-CLOCKWISE FROM BOTTOM RIGHT
-			 * 			    1 --------- 2
-			 *              |           |
-			 * 				0 --------- 3
-			 */
-			
-			if (x <= (double) (this.getBattleFieldWidth() / 2)) {
-				if (y <= (double) (this.getBattleFieldHeight() / 2)) {
-					return 0;
-				} else {
-					return 1;
-				}
-			} else {
-				if (y <= (double) (this.getBattleFieldHeight() / 2)) {
-					return 3;
-				} else {
-					return 2;
-				}
-			}
-		}
-		
-		private void moveToCorner(int corner) {
-			/*
-			 *  MOVES THE ROBOT TO A CORNER DEFINED BY THE INPUT. STARTING AT 0 AND GOING ANTI-CLOCKWISE FROM BOTTOM RIGHT
-			 * 			    1 --------- 2
-			 *              |           |
-			 * 				0 --------- 3
-			 */
-			
-			int cur_corner = getCorner(this.getX(), this.getY());
-			//THE X AND THE Y CO-ORDINATE OF THE REQUIRED CORNER
-			double required_x = 0;
-			double required_y = 0;
-			
-			switch (corner) {
-				case 0: {
-					required_x = 0;
-					required_y = 0;
-				} break;
-				case 1: {
-					required_x = 0;
-					required_y = this.getBattleFieldHeight();					
-				} break;
-				case 2: {
-					required_x = this.getBattleFieldWidth();
-					required_y = this.getBattleFieldWidth();
-				} break;
-				case 3: {
-					required_x = this.getBattleFieldWidth();
-					required_y = 0;
-				} break;
-			}
-			
-			pointToNorth();
-			ahead(required_y - this.getY());
-			pointToEast();
-			ahead(required_x - this.getX());
-			
-			
-		}
-		
-		//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------
-
+	//HOW MUCH DAMAGE THE BULLET CAN DO
+	double firepower = 3;				
 	
+	//DIRECTIONS
+	final int NORTH = 0;
+	final int EAST = 90;
+	final int SOUTH = 180;
+	final int WEST = 270;
+	
+	private double getNegativeHeight() {
+		//GETS THE DISTANCE TO THE TOP WALL
+		double negHeight = this.getBattleFieldHeight() - this.getY();
+		return negHeight;
+	}
+	
+	private double getNegativeWidth() {
+		//GETS THE DISTANCE TO THE RIGHT WALL
+		double negWidth = this.getBattleFieldWidth() - this.getX();
+		return negWidth;
+	}
+			
+	private void pointToNorth() {
+		//POINTS THE FRONT OF THE ROBOT TOWARDS NORTH
+		double bearing = this.getHeading();
+		turnLeft(bearing);
+	}
+	
+	private void pointToEast() {
+		//POINTS THE FRONT OF THE ROBOT TOWARDS EAST
+		double bearing = this.getHeading();
+		turnLeft(bearing - EAST);
+	}
+	
+	private void pointToSouth() {
+		//POINTS THE FRONT OF THE ROBOT TOWARDS SOUTH
+		double bearing = this.getHeading();
+		turnLeft(bearing - SOUTH);
+	}
+	
+	private void pointToWest() {
+		//POINTS THE FRONT OF THE ROBOT TOWARDS WEST
+		double bearing = this.getHeading();
+		turnLeft(bearing - WEST);
+	}
+	
+	private void moveToNearestCorner() {
+		//MOVES THE ROBOT TO THE NEAREST CORNER
+		pointToNorth();
+		//ahead(this.getBattleFieldHeight());
+		if (getNegativeHeight() >= this.getY()) {
+			ahead(-1 * this.getY());
+		} else {
+			ahead(this.getY());
+		}
+		pointToEast();
+		if (getNegativeWidth() >= this.getX()) {
+			ahead(-1 * this.getX());
+		} else {
+			ahead(this.getX());
+		}
+	}
+	
+	private void findTargetStationary(double enemy_bearing) {
+		//POINTS THE GUN AT THE ENEMY
+		turnGunRight(this.getHeading() - this.getGunHeading());
+		turnGunRight(enemy_bearing);
+	}
+	
+private double findLinearTarget3(double bearing_rads, double distance, double enemy_heading, double enemy_velocity) {
+		/*
+		 * THIS IS A LINEAR TARGETTING SYSTEM. 
+		 * IT PREDICTS WHERE A STRAIGHT MOVING ROBOT WILL BE IN THE FUTURE. IT THEN AIMS AND SHOOTS TAKING CARE OF THE FUTURE
+		 * SO THAT THE BULLET HITS THE ROBOT EVEN WHEN IT IS FAR AWAY
+		 */
+	
+		double my_X = this.getX();
+		double my_Y = this.getY();
+		
+		double absolute_bearing =  Math.toRadians(this.getHeading()) + bearing_rads;
+		
+		double enemy_X = my_X + distance * Math.sin(absolute_bearing);
+		double enemy_Y = my_Y + distance * Math.cos(absolute_bearing);
+		
+		double delta_time = 0;
+		double predicted_X = enemy_X;
+		double predicted_Y = enemy_Y;
+		
+		while ( ((++delta_time) * getBulletVelocity()) < Point2D.Double.distance(my_X, my_Y, predicted_X, predicted_Y) ) {
+			
+			predicted_X += Math.sin(enemy_heading) * enemy_velocity;
+			predicted_Y += Math.cos(enemy_heading) * enemy_velocity;
+			
+		}
+		
+		double angle = Utils.normalAbsoluteAngle(Math.atan2(predicted_X - my_X, predicted_Y - my_Y));
+		angle = Utils.normalRelativeAngle(angle - Math.toRadians(this.getGunHeading()));
+		angle = Math.toDegrees(angle);
+		
+		return angle;
+	}
+
+	private double getBulletVelocity() {
+		return 20 - (3 * firepower);
+	}
+		
+	private int getCorner(double x, double y) {
+		/*
+		 * RETURNS THE CORNER NUMBER. STARTING AT 0 AND GOING ANTI-CLOCKWISE FROM BOTTOM RIGHT
+		 * 			    1 --------- 2
+		 *              |           |
+		 * 				0 --------- 3
+		 */
+		
+		if (x <= (double) (this.getBattleFieldWidth() / 2)) {
+			if (y <= (double) (this.getBattleFieldHeight() / 2)) {
+				return 0;
+			} else {
+				return 1;
+			}
+		} else {
+			if (y <= (double) (this.getBattleFieldHeight() / 2)) {
+				return 3;
+			} else {
+				return 2;
+			}
+		}
+	}
+			
+	private void moveToCorner(int corner) {
+		/*
+		 *  MOVES THE ROBOT TO A CORNER DEFINED BY THE INPUT. STARTING AT 0 AND GOING ANTI-CLOCKWISE FROM BOTTOM RIGHT
+		 * 			    1 --------- 2
+		 *              |           |
+		 * 				0 --------- 3
+		 */
+		
+		//THE X AND THE Y CO-ORDINATE OF THE REQUIRED CORNER
+		double required_x = 0;
+		double required_y = 0;
+		
+		switch (corner) {
+			case 0: {
+				required_x = 0;
+				required_y = 0;
+			} break;
+			case 1: {
+				required_x = 0;
+				required_y = this.getBattleFieldHeight();					
+			} break;
+			case 2: {
+				required_x = this.getBattleFieldWidth();
+				required_y = this.getBattleFieldWidth();
+			} break;
+			case 3: {
+				required_x = this.getBattleFieldWidth();
+				required_y = 0;
+			} break;
+		}
+		
+		pointToNorth();
+		ahead(required_y - this.getY());
+		pointToEast();
+		ahead(required_x - this.getX());
+		
+	}
+		
+	//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------	
+
+
 	public void run() {
 		/*
 		 * THIS IS THE MAIN METHOD WHICH IS EXECUTED
