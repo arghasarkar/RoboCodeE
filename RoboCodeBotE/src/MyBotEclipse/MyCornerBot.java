@@ -272,15 +272,9 @@ public class MyCornerBot extends Robot{
     	/*
     	 * This method is called when your robot sees another robot, i.e. when the robot's radar scan "hits" another robot.
     	 */
-    	findTargetStationary(e.getBearing());
-    	
-    	//findLinearTarget(Math.toRadians((this.getHeading())), e.getBearingRadians(), e.getHeadingRadians(), e.getVelocity(), (20 - 3 * firepower));
-    	/*
-    	double absoluteBearing = Math.toRadians(getHeading()) + e.getBearingRadians();
-    	turnGunRight(Utils.normalRelativeAngle(absoluteBearing - 
-    	    Math.toRadians(getGunHeading()) + (e.getVelocity() * Math.sin(e.getHeadingRadians() - 
-    	    absoluteBearing) / 13.0)));
-    	*/
+    	double angle = findLinearTarget3(e.getBearingRadians(), e.getDistance(), e.getHeadingRadians(), e.getVelocity());
+    	turnGunRight(angle);
+    	System.out.println("Angle: " + angle);
     	fire(firepower);
     }
     

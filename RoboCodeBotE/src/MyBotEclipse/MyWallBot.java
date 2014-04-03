@@ -283,10 +283,10 @@ public class MyWallBot extends Robot{
     	/*
     	 * This method is called when your robot sees another robot, i.e. when the robot's radar scan "hits" another robot.
     	 */
-    	findTargetStationary(e.getBearing());
-    	//findLinearTarget(this.getHeading(), e.getBearing(), e.getHeadingRadians(), e.getVelocity(), (20 - 3 * firepower));
-    	//fire(firepower);
-    	//run();
+    	double angle = findLinearTarget3(e.getBearingRadians(), e.getDistance(), e.getHeadingRadians(), e.getVelocity());
+    	turnGunRight(angle);
+    	System.out.println("Angle: " + angle);
+    	fire(firepower);
     }
     
     public void onSkippedTurn(SkippedTurnEvent e) {

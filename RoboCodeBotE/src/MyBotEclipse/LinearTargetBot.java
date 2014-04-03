@@ -113,6 +113,12 @@ public class LinearTargetBot extends Robot {
 				
 			}
 			
+			if ((predicted_X > getBattleFieldWidth() || predicted_Y > getBattleFieldHeight()) || 
+					(predicted_X < 0 || predicted_Y < 0))
+			{
+				return -1000;
+			}
+			
 			//WORKS OUT THE ANGLE
 			double angle = Utils.normalAbsoluteAngle(Math.atan2(predicted_X - my_X, predicted_Y - my_Y));
 			angle = Utils.normalRelativeAngle(angle - Math.toRadians(this.getGunHeading()));
@@ -277,8 +283,13 @@ public class LinearTargetBot extends Robot {
     	fire(firepower);
     	System.out.println("HIyaarr");*/
     	double angle = findLinearTarget3(e.getBearingRadians(), e.getDistance(), e.getHeadingRadians(), e.getVelocity());
-    	turnGunRight(angle);
-    	fire(firepower);
+    	
+    	System.out.println("Angle: " + angle);
+    	if (angle != -1000) {
+    		turnGunRight(angle);
+    		fire(firepower);
+    	}
+    	
     	System.out.println("Scan called:" + scannedCalled++);
     }
     
