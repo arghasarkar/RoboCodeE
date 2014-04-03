@@ -111,6 +111,17 @@ public class MyWallBot extends Robot{
 				
 			}
 			
+			/*
+			 * THIS BIT CHECKS IF THE BULLET WILL GO OFF THE MAP. 
+			 * IF IT IS PREDICTED TO GO OFF THE MAP, THEN IT RETURNS AN ARBITARY VALUE OF -1000 
+			 * THE RETURNED VALUE IS CHECKED TO SEE IF IT -1000. IF ITS NOT, THEN THE SHOT IS FIRED
+			 */
+			if ((predicted_X > getBattleFieldWidth() || predicted_Y > getBattleFieldHeight()) || 
+					(predicted_X < 0 || predicted_Y < 0))
+			{
+				return -1000;
+			}
+			
 			//WORKS OUT THE ANGLE
 			double angle = Utils.normalAbsoluteAngle(Math.atan2(predicted_X - my_X, predicted_Y - my_Y));
 			angle = Utils.normalRelativeAngle(angle - Math.toRadians(this.getGunHeading()));
