@@ -134,6 +134,16 @@ public class MyWallBot extends Robot{
 		private double getBulletVelocity() {
 			return 20 - (3 * firepower);
 		}
+		
+		private double setFirepowerByDistance(double distance) {
+			//SETS THE FIREPOWER DEPENDING ON HOW FAR THE ENEMY IS
+			if (distance < 400) { return 3.0; }
+			if (distance < 600) { return 2.5; }
+			if (distance < 800) { return 2.0; }
+			if (distance < 1000) { return 1.5; }
+			if (distance < 1200) { return 1.0; }
+			return 0.75;
+		}
 			
 		private int getCorner(double x, double y) {
 			/*

@@ -15,7 +15,7 @@ public class RoboCodeBotE extends Robot{
 	//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------
 	
 	//HOW MUCH DAMAGE THE BULLET CAN DO
-	double firepower = 3;				
+	private double firepower = 3;				
 	
 	//DIRECTIONS
 	final int NORTH = 0;
@@ -82,7 +82,7 @@ public class RoboCodeBotE extends Robot{
 		turnGunRight(enemy_bearing);
 	}
 	
-private double findLinearTarget3(double bearing_rads, double distance, double enemy_heading, double enemy_velocity) {
+	private double findLinearTarget3(double bearing_rads, double distance, double enemy_heading, double enemy_velocity) {
 		/*
 		 * THIS IS A LINEAR TARGETTING SYSTEM. 
 		 * IT PREDICTS WHERE A STRAIGHT MOVING ROBOT WILL BE IN THE FUTURE. IT THEN AIMS AND SHOOTS TAKING CARE OF THE FUTURE
@@ -132,9 +132,20 @@ private double findLinearTarget3(double bearing_rads, double distance, double en
 	}
 
 	private double getBulletVelocity() {
+		//RETURNS THE BULLET VELOCITY
 		return 20 - (3 * firepower);
 	}
 		
+	private double setFirepowerByDistance(double distance) {
+		//SETS THE FIREPOWER DEPENDING ON HOW FAR THE ENEMY IS
+		if (distance < 400) { return 3.0; }
+		if (distance < 600) { return 2.5; }
+		if (distance < 800) { return 2.0; }
+		if (distance < 1000) { return 1.5; }
+		if (distance < 1200) { return 1.0; }
+		return 0.75;
+	}
+	
 	private int getCorner(double x, double y) {
 		/*
 		 * RETURNS THE CORNER NUMBER. STARTING AT 0 AND GOING ANTI-CLOCKWISE FROM BOTTOM RIGHT

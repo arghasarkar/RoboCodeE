@@ -136,6 +136,16 @@ public class LinearTargetBot extends Robot {
 		private double getBulletVelocity() {
 			return 20 - (3 * firepower);
 		}
+		
+		private double setFirepowerByDistance(double distance) {
+			//SETS THE FIREPOWER DEPENDING ON HOW FAR THE ENEMY IS
+			if (distance < 400) { return 3.0; }
+			if (distance < 600) { return 2.5; }
+			if (distance < 800) { return 2.0; }
+			if (distance < 1000) { return 1.5; }
+			if (distance < 1200) { return 1.0; }
+			return 0.75;
+		}
 			
 		private int getCorner(double x, double y) {
 			/*
@@ -283,13 +293,14 @@ public class LinearTargetBot extends Robot {
     	/*
     	 * This method is called when your robot sees another robot, i.e. when the robot's radar scan "hits" another robot.
     	 */
-    	/*double angle = findLinearTarget2(e.getDistance(), e.getBearing(), e.getVelocity(), e.getHeading());
-    	turnGunRight(angle);
-    	fire(firepower);
-    	System.out.println("HIyaarr");*/
+    	
+    	//SETS THE FIREPOWER ACCORDING TO THE DISTANCE OF THE ENEMY ROBOT
+    	firepower = setFirepowerByDistance(e.getDistance());
+    	
+    	//GETS THE GUN TURN ANGLE
     	double angle = findLinearTarget3(e.getBearingRadians(), e.getDistance(), e.getHeadingRadians(), e.getVelocity());
     	
-    	System.out.println("Angle: " + angle);
+    	//WILL ONLY FIRE THE GUN IF THE BULLET WILL NOT GO OFF THE BATTLEFIELD
     	if (angle != -1000) {
     		turnGunRight(angle);
     		fire(firepower);
