@@ -19,7 +19,9 @@ public class TestRobot4 extends Robot {
 		//THIS IS THE ENEMY ENERGY
 		private double enemy_energy = -1000;							
 		//HOW MUCH DAMAGE THE BULLET CAN DO
-		private double firepower = 3;				
+		private double firepower = 3;	
+		//HOW MANY TIMES THE ROBOT HAS MOVED TO DODGE A BULLET
+		private int dodge_count = 0;
 		
 		//DIRECTIONS
 		final int NORTH = 0;
@@ -220,8 +222,13 @@ public class TestRobot4 extends Robot {
 			if (enemy_energy != energy) {
 				enemy_energy = energy;
 				if (((enemy_energy - energy) <= 3.0) || ((enemy_energy - energy) >= 0.1)) {
-					turnRight(90);
-					ahead(this.getHeight() * 2);
+					//turnRight(90);
+					if (dodge_count % 10 == 0) {
+						ahead(this.getHeight() * 2);
+					} else {
+						back(this.getHeight() * 2);
+					}
+					
 				}
 				
 			}
@@ -236,6 +243,8 @@ public class TestRobot4 extends Robot {
 		 */
 		//pointToNorth();
 		this.setAdjustRadarForGunTurn(true);
+		//this.setAdjustGunForRobotTurn(true);
+		
 		//this.setAdjustGunForRobotTurn(true);
 		//this.setAdjustRadarForRobotTurn(true);
         while (true) {
@@ -315,19 +324,28 @@ public class TestRobot4 extends Robot {
     	 * This method is called when your robot sees another robot, i.e. when the robot's radar scan "hits" another robot.
     	 */
     	System.out.println("Energy: " + e.getEnergy());
-    	dodgeBullet(e.getEnergy());
-    	
-    	//SETS THE FIREPOWER ACCORDING TO THE DISTANCE OF THE ENEMY ROBOT
-    	firepower = setFirepowerByDistance(e.getDistance());
-    	
-    	//GETS THE GUN TURN ANGLE
-    	double angle = findLinearTarget3(e.getBearingRadians(), e.getDistance(), e.getHeadingRadians(), e.getVelocity());
-    	
-    	//WILL ONLY FIRE THE GUN IF THE BULLET WILL NOT GO OFF THE BATTLEFIELD
-    	if (angle != -1000) {
-    		turnGunRight(angle);
-    		fire(firepower);
+    	if (dodge_count == 0 || dodge_count % 5 == 0) {
+    		turnRight(e.getBearing() + 90);
     	}
+    	if (dodge_count % 5 == 0) {
+    		dodgeBullet(e.getEnergy());
+    	} else {
+    		//SETS THE FIREPOWER ACCORDING TO THE DISTANCE OF THE ENEMY ROBOT
+        	firepower = setFirepowerByDistance(e.getDistance());
+        	
+        	//GETS THE GUN TURN ANGLE
+        	double angle = findLinearTarget3(e.getBearingRadians(), e.getDistance(), e.getHeadingRadians(), e.getVelocity());
+        	
+        	//WILL ONLY FIRE THE GUN IF THE BULLET WILL NOT GO OFF THE BATTLEFIELD
+        	if (angle != -1000) {
+        		turnGunRight(angle);
+        		fire(firepower);
+        	} 
+    	}
+    	dodge_count++;
+    	
+    	
+    	
     	
     	System.out.println("Scan called:" + scannedCalled++);
     }
