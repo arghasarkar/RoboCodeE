@@ -324,10 +324,11 @@ public class TestRobot4 extends Robot {
     	 * This method is called when your robot sees another robot, i.e. when the robot's radar scan "hits" another robot.
     	 */
     	System.out.println("Energy: " + e.getEnergy());
-    	if (dodge_count == 0 || dodge_count % 5 == 0) {
+    	if (dodge_count == 0) {
     		turnRight(e.getBearing() + 90);
     	}
     	if (dodge_count % 5 == 0) {
+    		turnRight(e.getBearing() + 90);
     		dodgeBullet(e.getEnergy());
     	} else {
     		//SETS THE FIREPOWER ACCORDING TO THE DISTANCE OF THE ENEMY ROBOT
@@ -343,10 +344,7 @@ public class TestRobot4 extends Robot {
         	} 
     	}
     	dodge_count++;
-    	
-    	
-    	
-    	
+
     	System.out.println("Scan called:" + scannedCalled++);
     }
     

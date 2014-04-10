@@ -14,10 +14,15 @@ public class LinearTargetBot extends Robot {
 	
 	int scannedCalled = 0;							   //THIS IS USED FOR DEBUGGING OPTION
 	
-	//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------
 	
+	//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------
+		
+		//THIS IS THE ENEMY ENERGY
+		private double enemy_energy = -1000;							
 		//HOW MUCH DAMAGE THE BULLET CAN DO
-		double firepower = 3;				
+		private double firepower = 3;	
+		//HOW MANY TIMES THE ROBOT HAS MOVED TO DODGE A BULLET
+		private int dodge_count = 0;
 		
 		//DIRECTIONS
 		final int NORTH = 0;
@@ -83,8 +88,8 @@ public class LinearTargetBot extends Robot {
 			turnGunRight(this.getHeading() - this.getGunHeading());
 			turnGunRight(enemy_bearing);
 		}
-		
-	private double findLinearTarget3(double bearing_rads, double distance, double enemy_heading, double enemy_velocity) {
+			
+		private double findLinearTarget3(double bearing_rads, double distance, double enemy_heading, double enemy_velocity) {
 			/*
 			 * THIS IS A LINEAR TARGETTING SYSTEM. 
 			 * IT PREDICTS WHERE A STRAIGHT MOVING ROBOT WILL BE IN THE FUTURE. IT THEN AIMS AND SHOOTS TAKING CARE OF THE FUTURE
@@ -207,8 +212,31 @@ public class LinearTargetBot extends Robot {
 			ahead(required_x - this.getX());
 			
 		}
+		
+		public void dodgeBullet(double energy) {
+			//MOVES THE ROBOT RANDOMLY IN A DIRECTION TO DODGE BULLETS
+			if (enemy_energy == -1000) {
+				//SETS UP THE ENERGY FOR THE FIRST TIME USE
+				enemy_energy = energy;
+			}
+			System.out.println("Enemy energy: " + enemy_energy + "    Energy: " + energy);
+			if (enemy_energy != energy) {
+				enemy_energy = energy;
+				if (((enemy_energy - energy) <= 3.0) || ((enemy_energy - energy) >= 0.1)) {
+					//turnRight(90);
+					if (dodge_count % 10 == 0) {
+						ahead(this.getHeight() * 2);
+					} else {
+						back(this.getHeight() * 2);
+					}
+					
+				}
+				
+			}
+		}
 			
 		//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------	
+
 
 
 	public void run() {
