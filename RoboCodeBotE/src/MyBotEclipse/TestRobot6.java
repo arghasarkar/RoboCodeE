@@ -28,7 +28,8 @@ public class TestRobot6 extends Robot {
 		private int missed_shots_total = 0;
 		//HOW MANY TIMES FIREPOWER HAS BEEN REDUCED DUE TO SHOTS MISSED IN A ROW IN A ROW
 		private int missed_shots_row_reset = 0;
-		
+		//TARGETING METHOD - LINEAR / STATIONARY
+		private String targeting_method = "linear";
 		
 		//DIRECTIONS
 		final int NORTH = 0;
@@ -311,6 +312,13 @@ public class TestRobot6 extends Robot {
 		//BULLEDS HAVE FAILED TO HIT THE TARGET
 		missed_shots_row++;
 		missed_shots_total++;
+		
+		//USED TO SWITCH THE TARGETING METHOD: LINEAR / STATIONARY
+		if (missed_shots_row > 3) {
+			if (targeting_method.equals("linear")) {
+				targeting_method = "stationary";
+			} 
+		}
 	}
 
 	public void onDeath(DeathEvent e) {
@@ -373,7 +381,7 @@ public class TestRobot6 extends Robot {
         	
         	//GETS THE GUN TURN ANGLE
         	double angle = 0;
-        	if (e.getName().equals("sample.MyFirstRobot") == true) {
+        	if (e.getName().equals("sample.MyFirstRobot") == true || targeting_method.equals("stationary") ) {
         		this.setAdjustGunForRobotTurn(false);
         		this.setAdjustRadarForGunTurn(false);
         		this.setAdjustRadarForRobotTurn(false);
@@ -389,7 +397,7 @@ public class TestRobot6 extends Robot {
         	} 
     	}
     	dodge_count++;
-
+    	System.out.println("Targeting method: " + targeting_method);
     	//System.out.println("Scan called:" + scannedCalled++);
     }
     
