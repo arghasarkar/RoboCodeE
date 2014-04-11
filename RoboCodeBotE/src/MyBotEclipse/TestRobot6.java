@@ -10,7 +10,7 @@ import robocode.util.Utils;
  * Student ID: 1221352
  * Module: CS255
  */
-public class TestRobot5 extends Robot {
+public class TestRobot6 extends Robot {
 	
 	private int scannedCalled = 0;							   //THIS IS USED FOR DEBUGGING OPTION
 	
@@ -272,7 +272,7 @@ public class TestRobot5 extends Robot {
 		 */
 		//pointToNorth();
 		
-		this.setAdjustRadarForGunTurn(true);
+		//this.setAdjustRadarForGunTurn(true);
 		//this.setAdjustGunForRobotTurn(true);
 		
 		//this.setAdjustGunForRobotTurn(true);
@@ -373,9 +373,15 @@ public class TestRobot5 extends Robot {
         	
         	//GETS THE GUN TURN ANGLE
         	double angle = 0;
-        	
-        	angle = findLinearTarget3(e.getBearingRadians(), e.getDistance(), e.getHeadingRadians(), e.getVelocity());
-        	
+        	if (e.getName().equals("sample.MyFirstRobot") == true) {
+        		this.setAdjustGunForRobotTurn(false);
+        		this.setAdjustRadarForGunTurn(false);
+        		this.setAdjustRadarForRobotTurn(false);
+        		System.out.println("Stationary");
+        		angle = findTargetStationary2(e.getBearing(), this.getHeading(), this.getGunHeading());
+        	} else {
+        		angle = findLinearTarget3(e.getBearingRadians(), e.getDistance(), e.getHeadingRadians(), e.getVelocity());
+        	}
         	//WILL ONLY FIRE THE GUN IF THE BULLET WILL NOT GO OFF THE BATTLEFIELD
         	if (angle != -1000) {
         		turnGunRight(angle);

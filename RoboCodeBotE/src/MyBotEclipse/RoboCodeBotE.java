@@ -12,6 +12,7 @@ import robocode.util.Utils;
  */
 public class RoboCodeBotE extends Robot{
 	
+private int scannedCalled = 0;							   //THIS IS USED FOR DEBUGGING OPTION
 	
 	//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------
 		
@@ -21,6 +22,12 @@ public class RoboCodeBotE extends Robot{
 		private double firepower = 3;	
 		//HOW MANY TIMES THE ROBOT HAS MOVED TO DODGE A BULLET
 		private int dodge_count = 0;
+		//HOW MANY SHOTS MISSED IN A ROW
+		private int missed_shots_row = 0;
+		//HOW MANY SHOTS MISSED IN TOTAL
+		private int missed_shots_total = 0;
+		//HOW MANY TIMES FIREPOWER HAS BEEN REDUCED DUE TO SHOTS MISSED IN A ROW IN A ROW
+		private int missed_shots_row_reset = 0;
 		
 		
 		//DIRECTIONS
@@ -87,6 +94,13 @@ public class RoboCodeBotE extends Robot{
 			turnGunRight(this.getHeading() - this.getGunHeading());
 			turnGunRight(enemy_bearing);
 		}
+		
+		private double findTargetStationary2(double enemy_bearing, double my_heading, double my_gun_heading) {
+			double angle = my_heading - my_gun_heading;
+			angle += enemy_bearing;
+			//RETURNS THE ANGLE TE GUN SHOULD BE TURNED AS A DOUBLE
+			return angle;
+		}
 			
 		private double findLinearTarget3(double bearing_rads, double distance, double enemy_heading, double enemy_velocity) {
 			/*
@@ -149,6 +163,23 @@ public class RoboCodeBotE extends Robot{
 			if (distance < 1000) { return 1.5; }
 			if (distance < 1200) { return 1.0; }
 			return 0.75;
+		}
+		
+		private double setFirepowerReduction() {
+			//REDUCES THE POWER ACCORDING TO ARBITARY VALUE DEPENDING ON HOW MANY SHOTS HAVE BEEN MISSED IN A ROW
+			if (missed_shots_row >= 10) { return 3.0; } 
+			if (missed_shots_row >= 7) { return 2.0; }
+			if (missed_shots_row >= 5) { return 1.5; }
+			if (missed_shots_row >= 2) { return 1.0; }
+			return 0.0;
+		}
+		
+		private double setFirepower(double distance) {
+			//SET THE FIREPOWER DEPENDING ON DISTANCE AND SHOTS MISSED
+			double local_firepower = 0;							//FIREPOWER VARIBLE BEFORE BEING RETURNED
+			local_firepower = setFirepowerByDistance(distance);
+			local_firepower -= setFirepowerReduction();
+			return local_firepower;
 		}
 			
 		private int getCorner(double x, double y) {
@@ -228,15 +259,12 @@ public class RoboCodeBotE extends Robot{
 					} else {
 						back(this.getHeight() * 2);
 					}
-					
 				}
-				
 			}
 		}
 			
 		//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------	
-
-
+	
 
 	public void run() {
 		/*
