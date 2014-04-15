@@ -1,6 +1,8 @@
 package MyBotEclipse;
 
 import java.awt.geom.Point2D;
+import java.awt.Color;
+import java.awt.Graphics2D;
 
 import robocode.*;
 import robocode.util.Utils;
@@ -106,7 +108,12 @@ public class TestRobot7 extends Robot {
 		}
 		
 		private double findTargetHeadOn(double absoluteBearing, double enemy_bearing, double my_heading, double my_gun_heading) {
-			double angle = findTargetStationary2(enemy_bearing, my_heading, my_gun_heading);
+			double angle = 0;
+			if (ex_absolute_bearing == -1000) {
+				angle = findTargetStationary2(enemy_bearing, my_heading, my_gun_heading);
+			} else {
+				angle = findTargetStationary2(absoluteBearing, my_heading, my_gun_heading);
+			}
 			return angle;
 		}
 			
@@ -346,7 +353,7 @@ public class TestRobot7 extends Robot {
 	public void onPaint(PaintEvent e) {
 		/*
 		 * This event occurs when your robot should paint, where the onPaint() is called on your robot.
-		 */
+		 */ 
 	}
 	
 	public void onRobotDeath(RobotDeathEvent e) {
