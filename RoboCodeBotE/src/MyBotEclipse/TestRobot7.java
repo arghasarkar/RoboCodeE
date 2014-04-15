@@ -32,8 +32,8 @@ public class TestRobot7 extends Robot {
 		private int missed_shots_row_reset = 0;
 		//TARGETING METHOD - LINEAR / STATIONARY
 		private String targeting_method = "linear";
-		//THIS IS THE PREVIOUS ABSOLUTE BEARING USED FOR HEAD ON TARGETING. -1000 is the initialisation value
-		private double ex_absolute_bearing = -1000;
+		//THIS IS THE PREVIOUS BEARING USED FOR HEAD ON TARGETING. -1000 is the initialisation value
+		private double ex_bearing = -1000;
 		
 		//DIRECTIONS
 		final int NORTH = 0;
@@ -101,19 +101,21 @@ public class TestRobot7 extends Robot {
 		}
 		
 		private double findTargetStationary2(double enemy_bearing, double my_heading, double my_gun_heading) {
+			//POINTS THE GUN AT THE ENEMY'S CURRENT POSITION
 			double angle = my_heading - my_gun_heading;
 			angle += enemy_bearing;
 			//RETURNS THE ANGLE TE GUN SHOULD BE TURNED AS A DOUBLE
 			return angle;
 		}
 		
-		private double findTargetHeadOn(double absoluteBearing, double enemy_bearing, double my_heading, double my_gun_heading) {
+		private double findTargetExPosition(double enemy_bearing, double my_heading, double my_gun_heading) {
 			double angle = 0;
-			if (ex_absolute_bearing == -1000) {
-				angle = findTargetStationary2(enemy_bearing, my_heading, my_gun_heading);
+			if (ex_bearing == -1000) {
+				findTargetStationary2(enemy_bearing, my_heading, my_gun_heading);
 			} else {
-				angle = findTargetStationary2(absoluteBearing, my_heading, my_gun_heading);
+				findTargetStationary2(ex_bearing, my_heading, my_gun_heading);
 			}
+			ex_bearing = enemy_bearing;
 			return angle;
 		}
 			
@@ -378,13 +380,11 @@ public class TestRobot7 extends Robot {
     	/*
     	 * This method is called when your robot sees another robot, i.e. when the robot's radar scan "hits" another robot.
     	 */
-    	//System.out.println(e.getName());
-    	
-    	
-    	
+    		
     	if (dodge_count == 0) {
     		turnRight(e.getBearing() + 90);
     	}
+    	
     	if (dodge_count % 5 == 0) {
     		turnRight(e.getBearing() + 90);
     		dodgeBullet(e.getEnergy());
@@ -400,13 +400,12 @@ public class TestRobot7 extends Robot {
         		this.setAdjustRadarForRobotTurn(false);
         		System.out.println("Stationary");
         		
-        		angle = findTargetStationary2(e.getBearing(), this.getHeading(), this.getGunHeading());
+        		angle = findTargetExPosition(e.getBearing(), this.getHeading(), this.getGunHeading());
+        		//System.out.println("Absoulute Bearing: " + absoluteBearing);
         		
-        		double absoluteBearing = 0;
-        		angle = findTargetHeadOn(absoluteBearing, e.getBearing(), this.getHeading(), this.getGunHeading());
-        	
         	} else {
         		angle = findLinearTarget3(e.getBearingRadians(), e.getDistance(), e.getHeadingRadians(), e.getVelocity());
+        		System.out.println("Linear targeting is used.");
         	}
         	//WILL ONLY FIRE THE GUN IF THE BULLET WILL NOT GO OFF THE BATTLEFIELD
         	if (angle != -1000) {
@@ -416,7 +415,7 @@ public class TestRobot7 extends Robot {
     	}
     	dodge_count++;
     	System.out.println("Targeting method: " + targeting_method);
-    	//System.out.println("Scan called:" + scannedCalled++);
+   
     }
     
     public void onSkippedTurn(SkippedTurnEvent e) {
