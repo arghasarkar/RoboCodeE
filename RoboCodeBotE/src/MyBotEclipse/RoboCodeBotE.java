@@ -14,8 +14,8 @@ public class RoboCodeBotE extends Robot{
 	
 private int scannedCalled = 0;							   //THIS IS USED FOR DEBUGGING OPTION
 	
-	//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------
-		
+//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------
+
 		//THIS IS THE ENEMY ENERGY
 		private double enemy_energy = -1000;							
 		//HOW MUCH DAMAGE THE BULLET CAN DO
@@ -28,7 +28,8 @@ private int scannedCalled = 0;							   //THIS IS USED FOR DEBUGGING OPTION
 		private int missed_shots_total = 0;
 		//HOW MANY TIMES FIREPOWER HAS BEEN REDUCED DUE TO SHOTS MISSED IN A ROW IN A ROW
 		private int missed_shots_row_reset = 0;
-		
+		//TARGETING METHOD - LINEAR / STATIONARY
+		private String targeting_method = "linear";
 		
 		//DIRECTIONS
 		final int NORTH = 0;
@@ -264,7 +265,7 @@ private int scannedCalled = 0;							   //THIS IS USED FOR DEBUGGING OPTION
 		}
 			
 		//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------	
-	
+
 
 	public void run() {
 		/*
