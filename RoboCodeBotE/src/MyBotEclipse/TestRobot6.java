@@ -416,6 +416,7 @@ public class TestRobot6 extends Robot {
     public void onWin(WinEvent e) {
     	/*
     	 * This event is sent to onWin() when your robot wins the round in a battle
+    	 this is better
     	 */
     }
     
