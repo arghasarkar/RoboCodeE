@@ -53,6 +53,8 @@ public class TestRobot6 extends Robot {
 			//POINTS THE FRONT OF THE ROBOT TOWARDS NORTH
 			double bearing = this.getHeading();
 			turnLeft(bearing);
+			
+			
 		}
 		
 		private void pointToEast() {
