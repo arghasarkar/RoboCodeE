@@ -317,6 +317,7 @@ public class TestRobot8 extends Robot {
 		
 		//USED TO SWITCH THE TARGETING METHOD: LINEAR / STATIONARY
 		if (missed_shots_row > 5) {
+			//INCREASED THIS
 			if (targeting_method.equals("linear")) {
 				targeting_method = "stationary";
 			} 
