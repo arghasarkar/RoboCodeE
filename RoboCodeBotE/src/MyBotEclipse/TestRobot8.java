@@ -281,7 +281,7 @@ public class TestRobot8 extends Robot {
 		//this.setAdjustGunForRobotTurn(true);
 		//this.setAdjustRadarForRobotTurn(true);
         while (true) {
-        	turnRadarRight(360);
+        	turnRadarRight(Double.POSITIVE_INFINITY);
         }
     }
     
@@ -316,7 +316,7 @@ public class TestRobot8 extends Robot {
 		missed_shots_total++;
 		
 		//USED TO SWITCH THE TARGETING METHOD: LINEAR / STATIONARY
-		if (missed_shots_row > 3) {
+		if (missed_shots_row > 5) {
 			if (targeting_method.equals("linear")) {
 				targeting_method = "stationary";
 			} 
