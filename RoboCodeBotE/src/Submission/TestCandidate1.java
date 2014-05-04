@@ -10,7 +10,7 @@ import robocode.util.Utils;
  * Student ID: 1221352
  * Module: CS255
  */
-public class TestSubject1 extends Robot {
+public class TestCandidate1 extends Robot {
 
 	//-------------------------------------------------USEFUL FUNCTIONS--------------------------------------------------------
 

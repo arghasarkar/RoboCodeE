@@ -1,4 +1,4 @@
-package MyBotEclipse;
+package Submission;
 
 import java.awt.geom.Point2D;
 
@@ -10,7 +10,7 @@ import robocode.util.Utils;
  * Student ID: 1221352
  * Module: CS255
  */
-public class TestRobot8 extends Robot {
+public class TestCandidate2 extends Robot {
 
 	private int scannedCalled = 0;							   //THIS IS USED FOR DEBUGGING OPTION
 
